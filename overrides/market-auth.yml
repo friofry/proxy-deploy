@@ -1,0 +1,5 @@
+# Added only when market-proxy's compose file defines auth-service (puzzle auth).
+# eth-rpc-proxy already owns the container name "auth-service" on this host.
+services:
+  auth-service:
+    container_name: market-auth-service

@@ -1,0 +1,24 @@
+# Applied on top of eth-rpc-proxy/docker-compose.yml.
+services:
+  rpc-proxy:
+    ports: !reset []
+    networks:
+      rpc-network: {}
+      edge:
+        aliases:
+          - rpc-front
+
+  health-checker:
+    ports: !reset []
+
+  cache-service:
+    ports: !reset []
+    volumes:
+      # Same target as in the base file, so this replaces the repo's cache_config.yaml.
+      # install.sh writes it with KeyDB switched off unless KEYDB_URL is set.
+      - ./secrets/cache_config.yaml:/app/cache_config.yaml:ro
+
+networks:
+  edge:
+    external: true
+    name: proxy-edge

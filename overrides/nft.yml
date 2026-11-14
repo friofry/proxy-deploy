@@ -1,0 +1,17 @@
+# Applied on top of nft-proxy/docker-compose.yml.
+services:
+  nginx-proxy:
+    ports: !reset []
+    networks:
+      nft-network: {}
+      edge:
+        aliases:
+          - nft-front
+
+  auth-service:
+    ports: !reset []
+
+networks:
+  edge:
+    external: true
+    name: proxy-edge

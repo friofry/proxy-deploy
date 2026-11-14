@@ -1,0 +1,903 @@
+{
+  "chains": [
+    {
+      "name": "ethereum",
+      "network": "mainnet",
+      "chainId": 1,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Ethereum Mainnet",
+          "url": "https://mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Ethereum Mainnet",
+          "url": "https://eth-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1
+        }
+      ]
+    },
+    {
+      "name": "ethereum",
+      "network": "sepolia",
+      "chainId": 11155111,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Ethereum Sepolia",
+          "url": "https://sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 11155111
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Ethereum Sepolia",
+          "url": "https://eth-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 11155111
+        }
+      ]
+    },
+    {
+      "name": "ethereum",
+      "network": "hoodi",
+      "chainId": 560048,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Ethereum Hoodi",
+          "url": "https://hoodi.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 560048
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Ethereum Hoodi",
+          "url": "https://eth-hoodi.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 560048
+        }
+      ]
+    },
+    {
+      "name": "optimism",
+      "network": "mainnet",
+      "chainId": 10,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Optimism Mainnet",
+          "url": "https://optimism-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 10
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Optimism Mainnet",
+          "url": "https://opt-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 10
+        }
+      ]
+    },
+    {
+      "name": "optimism",
+      "network": "sepolia",
+      "chainId": 11155420,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Optimism Sepolia",
+          "url": "https://optimism-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 11155420
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Optimism Sepolia",
+          "url": "https://opt-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 11155420
+        }
+      ]
+    },
+    {
+      "name": "arbitrum",
+      "network": "mainnet",
+      "chainId": 42161,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Arbitrum Mainnet",
+          "url": "https://arbitrum-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 42161
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Arbitrum Mainnet",
+          "url": "https://arb-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 42161
+        }
+      ]
+    },
+    {
+      "name": "arbitrum",
+      "network": "sepolia",
+      "chainId": 421614,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Arbitrum Sepolia",
+          "url": "https://arbitrum-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 421614
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Arbitrum Sepolia",
+          "url": "https://arb-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 421614
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "network": "mainnet",
+      "chainId": 8453,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Base Mainnet",
+          "url": "https://base-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 8453
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Base Mainnet",
+          "url": "https://base-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 8453
+        }
+      ]
+    },
+    {
+      "name": "base",
+      "network": "sepolia",
+      "chainId": 84532,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Base Sepolia",
+          "url": "https://base-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 84532
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Base Sepolia",
+          "url": "https://base-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 84532
+        }
+      ]
+    },
+    {
+      "name": "linea",
+      "network": "mainnet",
+      "chainId": 59144,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Linea Mainnet",
+          "url": "https://linea-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 59144
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Linea Mainnet",
+          "url": "https://linea-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 59144
+        }
+      ]
+    },
+    {
+      "name": "linea",
+      "network": "sepolia",
+      "chainId": 59141,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Linea Sepolia",
+          "url": "https://linea-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 59141
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Linea Sepolia",
+          "url": "https://linea-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 59141
+        }
+      ]
+    },
+    {
+      "name": "blast",
+      "network": "mainnet",
+      "chainId": 81457,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Blast Mainnet",
+          "url": "https://blast-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 81457
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Blast Mainnet",
+          "url": "https://blast-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 81457
+        }
+      ]
+    },
+    {
+      "name": "blast",
+      "network": "sepolia",
+      "chainId": 168587773,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Blast Sepolia",
+          "url": "https://blast-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 168587773
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Blast Sepolia",
+          "url": "https://blast-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 168587773
+        }
+      ]
+    },
+    {
+      "name": "zksync",
+      "network": "mainnet",
+      "chainId": 324,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Zksync Mainnet",
+          "url": "https://zksync-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 324
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Zksync Mainnet",
+          "url": "https://zksync-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 324
+        }
+      ]
+    },
+    {
+      "name": "zksync",
+      "network": "sepolia",
+      "chainId": 300,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Zksync Sepolia",
+          "url": "https://zksync-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 300
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Zksync Sepolia",
+          "url": "https://zksync-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 300
+        }
+      ]
+    },
+    {
+      "name": "mantle",
+      "network": "mainnet",
+      "chainId": 5000,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Mantle Mainnet",
+          "url": "https://mantle-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 5000
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Mantle Mainnet",
+          "url": "https://mantle-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 5000
+        }
+      ]
+    },
+    {
+      "name": "mantle",
+      "network": "sepolia",
+      "chainId": 5003,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Mantle Sepolia",
+          "url": "https://mantle-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 5003
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Mantle Sepolia",
+          "url": "https://mantle-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 5003
+        }
+      ]
+    },
+    {
+      "name": "abstract",
+      "network": "mainnet",
+      "chainId": 2741,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Abstract Mainnet",
+          "url": "https://abstract-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 2741
+        }
+      ]
+    },
+    {
+      "name": "abstract",
+      "network": "testnet",
+      "chainId": 11124,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Abstract Testnet",
+          "url": "https://abstract-testnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 11124
+        }
+      ]
+    },
+    {
+      "name": "unichain",
+      "network": "mainnet",
+      "chainId": 130,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Unichain Mainnet",
+          "url": "https://unichain-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 130
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Unichain Mainnet",
+          "url": "https://unichain-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 130
+        }
+      ]
+    },
+    {
+      "name": "unichain",
+      "network": "sepolia",
+      "chainId": 1301,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Unichain Sepolia",
+          "url": "https://unichain-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1301
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Unichain Sepolia",
+          "url": "https://unichain-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1301
+        }
+      ]
+    },
+    {
+      "name": "katana",
+      "network": "mainnet",
+      "chainId": 747474,
+      "providers": [
+        {
+          "type": "katana",
+          "name": "Katana-1 Katana Mainnet",
+          "url": "https://rpc.katana.network/",
+          "authType": "no-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 747474
+        }
+      ]
+    },
+    {
+      "name": "katana",
+      "network": "bokuto",
+      "chainId": 737373,
+      "providers": [
+        {
+          "type": "katana",
+          "name": "Katana-1 Katana Bokuto",
+          "url": "https://rpc-bokuto.katanarpc.com/",
+          "authType": "no-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 737373
+        }
+      ]
+    },
+    {
+      "name": "bsc",
+      "network": "mainnet",
+      "chainId": 56,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Bsc Mainnet",
+          "url": "https://bsc-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 56
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Bsc Mainnet",
+          "url": "https://bnb-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 56
+        }
+      ]
+    },
+    {
+      "name": "bsc",
+      "network": "testnet",
+      "chainId": 97,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Bsc Testnet",
+          "url": "https://bsc-testnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 97
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Bsc Testnet",
+          "url": "https://bnb-testnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 97
+        }
+      ]
+    },
+    {
+      "name": "polygon",
+      "network": "mainnet",
+      "chainId": 137,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Polygon Mainnet",
+          "url": "https://polygon-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 137
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Polygon Mainnet",
+          "url": "https://polygon-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 137
+        }
+      ]
+    },
+    {
+      "name": "polygon",
+      "network": "amoy",
+      "chainId": 80002,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Polygon Amoy",
+          "url": "https://polygon-amoy.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 80002
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Polygon Amoy",
+          "url": "https://polygon-amoy.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 80002
+        }
+      ]
+    },
+    {
+      "name": "polygon-zkevm",
+      "network": "mainnet",
+      "chainId": 1101,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Polygon-zkevm Mainnet",
+          "url": "https://polygonzkevm-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1101
+        }
+      ]
+    },
+    {
+      "name": "polygon-zkevm",
+      "network": "cardona",
+      "chainId": 2442,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Polygon-zkevm Cardona",
+          "url": "https://polygonzkevm-cardona.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 2442
+        }
+      ]
+    },
+    {
+      "name": "ink",
+      "network": "mainnet",
+      "chainId": 57073,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Ink Mainnet",
+          "url": "https://ink-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 57073
+        }
+      ]
+    },
+    {
+      "name": "ink",
+      "network": "sepolia",
+      "chainId": 763373,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Ink Sepolia",
+          "url": "https://ink-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 763373
+        }
+      ]
+    },
+    {
+      "name": "soneium",
+      "network": "mainnet",
+      "chainId": 1868,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Soneium Mainnet",
+          "url": "https://soneium-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1868
+        }
+      ]
+    },
+    {
+      "name": "soneium",
+      "network": "minato",
+      "chainId": 1946,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Soneium Minato",
+          "url": "https://soneium-minato.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 1946
+        }
+      ]
+    },
+    {
+      "name": "scroll",
+      "network": "mainnet",
+      "chainId": 534352,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Scroll Mainnet",
+          "url": "https://scroll-mainnet.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 534352
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Scroll Mainnet",
+          "url": "https://scroll-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 534352
+        }
+      ]
+    },
+    {
+      "name": "scroll",
+      "network": "sepolia",
+      "chainId": 534351,
+      "providers": [
+        {
+          "type": "infura",
+          "name": "Infura-1 Scroll Sepolia",
+          "url": "https://scroll-sepolia.infura.io/v3/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 534351
+        },
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Scroll Sepolia",
+          "url": "https://scroll-sepolia.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 534351
+        }
+      ]
+    },
+    {
+      "name": "robinhood",
+      "network": "mainnet",
+      "chainId": 4663,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Robinhood Mainnet",
+          "url": "https://robinhood-mainnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 4663
+        },
+        {
+          "type": "robinhood",
+          "name": "Robinhood-1 Robinhood Mainnet",
+          "url": "https://rpc.mainnet.chain.robinhood.com/",
+          "authType": "no-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 4663
+        }
+      ]
+    },
+    {
+      "name": "robinhood",
+      "network": "testnet",
+      "chainId": 46630,
+      "providers": [
+        {
+          "type": "alchemy",
+          "name": "Alchemy-1 Robinhood Testnet",
+          "url": "https://robinhood-testnet.g.alchemy.com/v2/",
+          "authType": "token-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 46630
+        },
+        {
+          "type": "robinhood",
+          "name": "Robinhood-1 Robinhood Testnet",
+          "url": "https://rpc.testnet.chain.robinhood.com/",
+          "authType": "no-auth",
+          "authToken": "",
+          "authLogin": "",
+          "authPassword": "",
+          "chainId": 46630
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# Applied on top of market-proxy/docker-compose.yml.
+# No host ports: only Caddy is published. The front nginx joins the shared edge network.
+services:
+  market-fetcher:
+    ports: !reset []
+
+  market-proxy:
+    ports: !reset []
+    networks:
+      markets-network: {}
+      edge:
+        aliases:
+          - market-front
+
+  market-proxy-metrics:
+    ports: !reset []
+
+networks:
+  edge:
+    external: true
+    name: proxy-edge

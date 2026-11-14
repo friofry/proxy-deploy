@@ -1,0 +1,27 @@
+# The only container with published ports. Terminates TLS and routes by host name.
+name: proxy-edge
+
+services:
+  caddy:
+    image: caddy:2
+    container_name: proxy-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./conf:/etc/caddy:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - edge
+
+networks:
+  edge:
+    external: true
+    name: proxy-edge
+
+volumes:
+  caddy_data:
+  caddy_config:
