@@ -3,13 +3,36 @@
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
+# Runs a command until it succeeds, for up to 5 minutes.
+retry() {
+  local attempt
+  for attempt in $(seq 1 30); do
+    "$@" && return 0
+    echo "    not ready, retrying in 10s ($attempt/30)" >&2
+    sleep 10
+  done
+  return 1
+}
+
+# A fresh cloud image runs its own apt jobs on first boot (cloud-init, unattended
+# upgrades) and holds the apt locks for a minute or two.
+echo "==> Waiting for first-boot setup"
+if command -v cloud-init >/dev/null; then
+  timeout 300 cloud-init status --wait >/dev/null 2>&1 || true
+fi
+# Every apt call, including the ones inside the Docker installer, waits for the dpkg lock.
+echo 'DPkg::Lock::Timeout "300";' > /etc/apt/apt.conf.d/99-lock-timeout
+
 echo "==> Packages"
-apt-get update -qq
-apt-get install -y -qq ca-certificates curl git jq rsync ufw openssl >/dev/null
+retry apt-get update -qq
+retry apt-get install -y -qq ca-certificates curl git jq rsync ufw openssl >/dev/null
 
 echo "==> Docker"
 if ! command -v docker >/dev/null; then
-  curl -fsSL https://get.docker.com | sh >/dev/null
+  installer=$(mktemp)
+  retry curl -fsSL https://get.docker.com -o "$installer"
+  retry sh "$installer" >/dev/null
+  rm -f "$installer"
 fi
 if [ ! -f /etc/docker/daemon.json ]; then
   # Without rotation container logs grow until the disk is full.
