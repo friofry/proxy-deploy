@@ -82,11 +82,59 @@ jq '(.chains[].provider) |= (.authToken="" | .authLogin="" | .authPassword="")' 
   ../eth-rpc-proxy/secrets/reference_providers.json > templates/reference_providers.json
 ```
 
-## More hosts
+## Creating hosts on DigitalOcean
+
+`provision.sh` wraps `doctl` (install it and run `doctl auth init` first). Set
+`DO_SSH_KEYS` in `.env`, then:
+
+```bash
+./provision.sh hosts 1                  # creates droplet proxy-1; billed from this moment
+./bootstrap.sh $(./provision.sh ips)
+./deploy.sh $(./provision.sh ips)
+```
+
+Resources are found by the tag `DO_TAG`, so re-running a command creates only
+what is missing. `./provision.sh status` shows what exists.
+
+## Behind a load balancer
 
 Auth needs nothing shared except configuration: puzzles and tokens are signed
-with `JWT_SECRET`, so any host accepts a token issued by another. To add a host,
-run `bootstrap.sh` and `deploy.sh` against it with the same `.env`.
+with `JWT_SECRET`, so any host accepts a token issued by another, and no sticky
+sessions are needed.
+
+```
+internet ──► load balancer :443 (TLS) ──► host-1 :80 Caddy ──► the three stacks
+                                     └──► host-2 :80 Caddy ──► the three stacks
+```
+
+1. Set `TLS_MODE=lb` in `.env`. Caddy then serves plain HTTP on port 80, routes
+   by host name and answers `/healthz` for the balancer.
+2. Create the hosts and deploy with the same `.env`:
+
+   ```bash
+   ./provision.sh hosts 2
+   ./bootstrap.sh $(./provision.sh ips)
+   ./deploy.sh $(./provision.sh ips)
+   ```
+
+3. Give the balancer a certificate that covers the three domains and put its ID
+   into `DO_CERT_ID`:
+
+   ```bash
+   # domains whose DNS is hosted elsewhere: upload a certificate you already have
+   doctl compute certificate create --name proxy-cert --type custom \
+     --leaf-certificate-path cert.pem --private-key-path key.pem
+   # domains whose DNS is managed by DigitalOcean
+   doctl compute certificate create --name proxy-cert --type lets_encrypt \
+     --dns-names market.example.org,rpc.example.org,nft.example.org
+   ```
+
+4. `./provision.sh lb` creates the balancer and a cloud firewall that lets only
+   the balancer reach port 80 on the hosts. It prints the address to point the
+   domains at.
+
+To test one host directly before the firewall exists:
+`curl -H 'Host: market.example.org' http://HOST_IP/auth/puzzle`.
 
 What does not scale for free:
 

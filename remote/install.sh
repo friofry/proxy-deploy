@@ -227,29 +227,49 @@ site_names() {
   printf '%s' "$names"
 }
 
-step_caddy() {
-  log "Configuring Caddy"
-  need MARKET_DOMAIN RPC_DOMAIN NFT_DOMAIN
-  ensure_network
-  local ip names dir=$ROOT/caddy
+# TLS_MODE=caddy: this host is the edge. Caddy gets certificates itself.
+caddyfile_tls() {
+  local ip names spec label domain
   ip=$(public_ip)
   [ -n "$ip" ] || die "cannot detect the public IP, set PUBLIC_IP in .env"
+  if [ -n "${ACME_EMAIL:-}" ]; then
+    printf '{\n\temail %s\n}\n\n' "$ACME_EMAIL"
+  fi
+  for spec in "market:$MARKET_DOMAIN" "rpc:$RPC_DOMAIN" "nft:$NFT_DOMAIN"; do
+    label=${spec%%:*}
+    domain=${spec#*:}
+    names=$(site_names "$label" "$domain" "$ip")
+    [ -n "$names" ] || continue
+    printf '%s {\n\treverse_proxy %s-front:8080\n}\n\n' "$names" "$label"
+  done
+}
+
+# TLS_MODE=lb: a load balancer terminates TLS and talks plain HTTP to port 80.
+# Caddy only routes by host name and answers the balancer's health check.
+caddyfile_behind_lb() {
+  local spec
+  # Trust X-Forwarded-For from the balancer (it connects over the private network).
+  printf '{\n\tauto_https off\n\tservers {\n\t\ttrusted_proxies static private_ranges\n\t}\n}\n\n'
+  # Health checks arrive with the host's IP as the Host header, so they land here.
+  printf ':80 {\n\trespond /healthz "ok" 200\n\trespond "unknown host" 404\n}\n\n'
+  for spec in "market:$MARKET_DOMAIN" "rpc:$RPC_DOMAIN" "nft:$NFT_DOMAIN"; do
+    printf 'http://%s {\n\treverse_proxy %s-front:8080\n}\n\n' "${spec#*:}" "${spec%%:*}"
+  done
+}
+
+step_caddy() {
+  log "Configuring Caddy (TLS_MODE=${TLS_MODE:-caddy})"
+  need MARKET_DOMAIN RPC_DOMAIN NFT_DOMAIN
+  ensure_network
+  local dir=$ROOT/caddy
   mkdir -p "$dir/conf"
   cp "$KIT/caddy/docker-compose.yml" "$dir/docker-compose.yml"
 
-  {
-    if [ -n "${ACME_EMAIL:-}" ]; then
-      printf '{\n\temail %s\n}\n\n' "$ACME_EMAIL"
-    fi
-    local spec label domain
-    for spec in "market:$MARKET_DOMAIN" "rpc:$RPC_DOMAIN" "nft:$NFT_DOMAIN"; do
-      label=${spec%%:*}
-      domain=${spec#*:}
-      names=$(site_names "$label" "$domain" "$ip")
-      [ -n "$names" ] || continue
-      printf '%s {\n\treverse_proxy %s-front:8080\n}\n\n' "$names" "$label"
-    done
-  } > "$dir/conf/Caddyfile"
+  case "${TLS_MODE:-caddy}" in
+    caddy) caddyfile_tls > "$dir/conf/Caddyfile" ;;
+    lb)    caddyfile_behind_lb > "$dir/conf/Caddyfile" ;;
+    *)     die "TLS_MODE must be 'caddy' or 'lb'" ;;
+  esac
 
   grep -q reverse_proxy "$dir/conf/Caddyfile" || die "no host names to serve: DNS is not switched and SSLIP_TEST_DOMAINS=0"
   cat "$dir/conf/Caddyfile"
@@ -335,6 +355,15 @@ step_smoke() {
   expect "no credentials -> 401"  401 "http://nft-front:8080$nft_path"
   expect "basic auth -> 200"      200 -u "$nu:$np" "http://nft-front:8080$nft_path"
   expect "bearer token -> 200"    200 -H "$nt" "http://nft-front:8080$nft_path"
+
+  if [ "${TLS_MODE:-caddy}" = lb ]; then
+    echo "caddy (the path the load balancer uses)"
+    expect "health check"                 200 http://proxy-caddy/healthz
+    expect "unknown host -> 404"          404 http://proxy-caddy/
+    expect "market host routed -> 401"    401 -H "Host: $MARKET_DOMAIN" http://proxy-caddy/v1/leaderboard/prices
+    expect "rpc host routed -> 401"       401 -H "Host: $RPC_DOMAIN" -X POST -H "$json" -d "$rpc_body" http://proxy-caddy/ethereum/mainnet
+    expect "nft host routed -> 401"       401 -H "Host: $NFT_DOMAIN" "http://proxy-caddy$nft_path"
+  fi
 }
 
 # Solves a real puzzle against each proxy with the tester that ships in proxy-common:
