@@ -227,6 +227,12 @@ site_names() {
   printf '%s' "$names"
 }
 
+# One site: everything goes to the proxy's front nginx except its Prometheus
+# metrics, which eth-rpc-proxy and nft-proxy serve without credentials.
+site_block() {
+  printf '%s {\n\t@metrics path /metrics /metrics/*\n\trespond @metrics 404\n\treverse_proxy %s-front:8080\n}\n\n' "$1" "$2"
+}
+
 # TLS_MODE=caddy: this host is the edge. Caddy gets certificates itself.
 caddyfile_tls() {
   local ip names spec label domain
@@ -240,7 +246,7 @@ caddyfile_tls() {
     domain=${spec#*:}
     names=$(site_names "$label" "$domain" "$ip")
     [ -n "$names" ] || continue
-    printf '%s {\n\treverse_proxy %s-front:8080\n}\n\n' "$names" "$label"
+    site_block "$names" "$label"
   done
 }
 
@@ -253,7 +259,7 @@ caddyfile_behind_lb() {
   # Health checks arrive with the host's IP as the Host header, so they land here.
   printf ':80 {\n\trespond /healthz "ok" 200\n\trespond "unknown host" 404\n}\n\n'
   for spec in "market:$MARKET_DOMAIN" "rpc:$RPC_DOMAIN" "nft:$NFT_DOMAIN"; do
-    printf 'http://%s {\n\treverse_proxy %s-front:8080\n}\n\n' "${spec#*:}" "${spec%%:*}"
+    site_block "http://${spec#*:}" "${spec%%:*}"
   done
 }
 
