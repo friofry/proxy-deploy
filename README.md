@@ -50,7 +50,10 @@ If the domains sit behind a CDN or load balancer, set `FORCE_DOMAINS=1`.
 ## Day to day
 
 ```bash
-./deploy.sh root@HOST                       # redeploy (new ref, new key, new template)
+./redeploy.sh                               # redeploy every droplet of DO_TAG with the refs in .env
+./redeploy.sh -r master                     # set MARKET_REF, RPC_REF and NFT_REF to a ref first
+./redeploy.sh -n -r master                  # show the refs and hosts, change nothing
+./deploy.sh root@HOST                       # redeploy one host (new ref, new key, new template)
 ./deploy.sh -s smoke root@HOST              # one step: sync|render|check|up|caddy|smoke|puzzle
 ssh root@HOST /opt/proxies/kit/remote/install.sh dc rpc ps
 ssh root@HOST /opt/proxies/kit/remote/install.sh dc market logs -f --tail 100
