@@ -166,36 +166,6 @@
       }
     },
     {
-      "name": "blast",
-      "network": "mainnet",
-      "chainId": 81457,
-      "provider": {
-        "type": "infura",
-        "name": "Infura Blast Mainnet",
-        "url": "https://blast-mainnet.infura.io/v3/",
-        "authType": "token-auth",
-        "authToken": "",
-        "authLogin": "",
-        "authPassword": "",
-        "chainId": 81457
-      }
-    },
-    {
-      "name": "blast",
-      "network": "sepolia",
-      "chainId": 168587773,
-      "provider": {
-        "type": "infura",
-        "name": "Infura Blast Sepolia",
-        "url": "https://blast-sepolia.infura.io/v3/",
-        "authType": "token-auth",
-        "authToken": "",
-        "authLogin": "",
-        "authPassword": "",
-        "chainId": 168587773
-      }
-    },
-    {
       "name": "zksync",
       "network": "mainnet",
       "chainId": 324,
