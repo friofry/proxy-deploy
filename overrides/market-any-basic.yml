@@ -1,0 +1,6 @@
+# Added only when MARKET_ANY_BASIC_AUTH=1: the front nginx takes any basic auth
+# pair. See market-any-basic/auth.conf.
+services:
+  market-proxy:
+    volumes:
+      - ${KIT:?run docker compose through install.sh dc}/overrides/market-any-basic/auth.conf:/usr/local/openresty/nginx/conf/auth.conf:ro

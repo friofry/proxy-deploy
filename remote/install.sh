@@ -7,6 +7,7 @@
 set -euo pipefail
 
 KIT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+export KIT   # overrides/market-any-basic.yml mounts a file from the kit
 ROOT=${PROXIES_ROOT:-/opt/proxies}
 EDGE_NET=proxy-edge
 CURL_IMAGE=curlimages/curl:8.11.1
@@ -51,6 +52,9 @@ compose_for() {
       FILES=(-f docker-compose.yml -f "$KIT/overrides/market.yml")
       if grep -qE '^  auth-service:' "$DIR/docker-compose.yml"; then
         FILES+=(-f "$KIT/overrides/market-auth.yml")
+      fi
+      if [ "${MARKET_ANY_BASIC_AUTH:-0}" = 1 ]; then
+        FILES+=(-f "$KIT/overrides/market-any-basic.yml")
       fi
       ;;
     rpc)
@@ -205,6 +209,9 @@ ensure_network() {
 
 step_up() {
   ensure_network
+  if [ "${MARKET_ANY_BASIC_AUTH:-0}" = 1 ]; then
+    echo "WARN: MARKET_ANY_BASIC_AUTH=1, market-proxy takes any basic auth name and password" >&2
+  fi
   local p
   for p in market rpc nft; do
     log "Building and starting $p"

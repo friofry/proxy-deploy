@@ -59,6 +59,14 @@ Clients of that other name may ship another basic auth pair. Put it in
 `RPC_` and `NFT_`) and run the `render` step: the proxy then accepts both pairs.
 nginx reads the file on every request, so nothing restarts.
 
+When the pair those clients ship is not known at all, `MARKET_ANY_BASIC_AUTH=1`
+and the `up` step make market-proxy take any basic auth name and password. A
+request without credentials is still a 401 and puzzle tokens work as before, but
+the data is then as good as public: anyone who sends `-u x:y` gets it. It swaps
+market-proxy's `auth.conf` for `overrides/market-any-basic/auth.conf`, so a later
+change to the original does not apply while the switch is on. Set it back to 0
+and run `up` again to return to the pairs in `.env`.
+
 ## Day to day
 
 ```bash
