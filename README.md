@@ -47,6 +47,18 @@ Caddy can only get a certificate for a name that already points at the host, so
 
 If the domains sit behind a CDN or load balancer, set `FORCE_DOMAINS=1`.
 
+A proxy can answer to more than one name: list the others in
+`MARKET_EXTRA_DOMAINS`, `RPC_EXTRA_DOMAINS` or `NFT_EXTRA_DOMAINS`
+(comma-separated) and run the `caddy` step. Each is served by the same rule: only
+while it points at the host. That is also the way out when a name the apps use
+ends up pointing here by mistake: add it, and they are served instead of failing
+the TLS handshake until the record is put back.
+
+Clients of that other name may ship another basic auth pair. Put it in
+`MARKET_EXTRA_BASIC_AUTH_USER` and `MARKET_EXTRA_BASIC_AUTH_PASSWORD` (same for
+`RPC_` and `NFT_`) and run the `render` step: the proxy then accepts both pairs.
+nginx reads the file on every request, so nothing restarts.
+
 ## Day to day
 
 ```bash

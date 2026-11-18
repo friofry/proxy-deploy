@@ -110,11 +110,24 @@ put() {
   chmod 644 "$path"
 }
 
+htpasswd_line() {
+  printf '%s:%s\n' "$1" "$(printf '%s' "$2" | openssl passwd -apr1 -stdin)"
+}
+
+# The proxy's own pair and, when <PROXY>_EXTRA_BASIC_AUTH_USER is set, a second
+# one: a host that answers to two names may have clients with two passwords.
 render_htpasswd() {
-  local user pass
+  local user pass extra_user=${1}_EXTRA_BASIC_AUTH_USER extra_pass=${1}_EXTRA_BASIC_AUTH_PASSWORD
   user=$(pick "$1" BASIC_AUTH_USER)
   pass=$(pick "$1" BASIC_AUTH_PASSWORD)
-  printf '%s:%s\n' "$user" "$(printf '%s' "$pass" | openssl passwd -apr1 -stdin)" | put "$2"
+  if [ -z "${!extra_user:-}" ]; then
+    htpasswd_line "$user" "$pass" | put "$2"
+    return
+  fi
+  [ -n "${!extra_pass:-}" ] || die "$extra_pass is empty in .env"
+  # nginx checks only the first line with a given name
+  [ "${!extra_user}" != "$user" ] || die "$extra_user is the same name as the main one: one name has one password, set ${1}_BASIC_AUTH_PASSWORD instead"
+  { htpasswd_line "$user" "$pass"; htpasswd_line "${!extra_user}" "${!extra_pass}"; } | put "$2"
 }
 
 render_auth_config() {
@@ -213,14 +226,27 @@ points_here() {
   getent ahostsv4 "$1" 2>/dev/null | awk '{print $1}' | grep -qxF "$2"
 }
 
-# site_names LABEL DOMAIN IP -> comma-separated host names Caddy should serve
+# proxy_domains LABEL -> the proxy's domain and its extra ones, space-separated
+proxy_domains() {
+  local extra
+  case $1 in
+    market) extra="$MARKET_DOMAIN ${MARKET_EXTRA_DOMAINS:-}" ;;
+    rpc)    extra="$RPC_DOMAIN ${RPC_EXTRA_DOMAINS:-}" ;;
+    nft)    extra="$NFT_DOMAIN ${NFT_EXTRA_DOMAINS:-}" ;;
+  esac
+  echo "${extra//,/ }"
+}
+
+# site_names LABEL IP -> comma-separated host names Caddy should serve
 site_names() {
-  local label=$1 domain=$2 ip=$3 names=""
-  if [ "${FORCE_DOMAINS:-0}" = 1 ] || points_here "$domain" "$ip"; then
-    names=$domain
-  else
-    echo "WARN: $domain does not resolve to $ip yet, not served (re-run deploy after the DNS switch)" >&2
-  fi
+  local label=$1 ip=$2 names="" domain
+  for domain in $(proxy_domains "$label"); do
+    if [ "${FORCE_DOMAINS:-0}" = 1 ] || points_here "$domain" "$ip"; then
+      names=${names:+$names, }$domain
+    else
+      echo "WARN: $domain does not resolve to $ip yet, not served (re-run deploy after the DNS switch)" >&2
+    fi
+  done
   if [ "${SSLIP_TEST_DOMAINS:-1}" = 1 ]; then
     names=${names:+$names, }$label.${ip//./-}.sslip.io
   fi
@@ -235,16 +261,14 @@ site_block() {
 
 # TLS_MODE=caddy: this host is the edge. Caddy gets certificates itself.
 caddyfile_tls() {
-  local ip names spec label domain
+  local ip names label
   ip=$(public_ip)
   [ -n "$ip" ] || die "cannot detect the public IP, set PUBLIC_IP in .env"
   if [ -n "${ACME_EMAIL:-}" ]; then
     printf '{\n\temail %s\n}\n\n' "$ACME_EMAIL"
   fi
-  for spec in "market:$MARKET_DOMAIN" "rpc:$RPC_DOMAIN" "nft:$NFT_DOMAIN"; do
-    label=${spec%%:*}
-    domain=${spec#*:}
-    names=$(site_names "$label" "$domain" "$ip")
+  for label in market rpc nft; do
+    names=$(site_names "$label" "$ip")
     [ -n "$names" ] || continue
     site_block "$names" "$label"
   done
@@ -253,13 +277,17 @@ caddyfile_tls() {
 # TLS_MODE=lb: a load balancer terminates TLS and talks plain HTTP to port 80.
 # Caddy only routes by host name and answers the balancer's health check.
 caddyfile_behind_lb() {
-  local spec
+  local label domain names
   # Trust X-Forwarded-For from the balancer (it connects over the private network).
   printf '{\n\tauto_https off\n\tservers {\n\t\ttrusted_proxies static private_ranges\n\t}\n}\n\n'
   # Health checks arrive with the host's IP as the Host header, so they land here.
   printf ':80 {\n\trespond /healthz "ok" 200\n\trespond "unknown host" 404\n}\n\n'
-  for spec in "market:$MARKET_DOMAIN" "rpc:$RPC_DOMAIN" "nft:$NFT_DOMAIN"; do
-    site_block "http://${spec#*:}" "${spec%%:*}"
+  for label in market rpc nft; do
+    names=""
+    for domain in $(proxy_domains "$label"); do
+      names=${names:+$names, }http://$domain
+    done
+    site_block "$names" "$label"
   done
 }
 
